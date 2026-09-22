@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="清流：把短视频变成可信、可控、可执行的信息。" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>清流 · 短视频用户控制层</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1020'/%3E%3Cpath d='M15 38c10-19 18-5 34-18-3 21-16 31-34 18Z' fill='%235eead4'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard" aria-label="清流首页"><span class="brand-mark">流</span><span>清流</span></a>
+      <p class="brand-note">短视频用户控制层</p>
+      <nav id="nav" aria-label="主导航">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span>今日工作台</button>
+        <button class="nav-item" data-view="verify"><span>◎</span>内容核验</button>
+        <button class="nav-item" data-view="decide"><span>◇</span>消费决策</button>
+        <button class="nav-item" data-view="library"><span>▣</span>收藏行动化</button>
+        <button class="nav-item" data-view="feed"><span>≋</span>推荐控制</button>
+        <button class="nav-item" data-view="local"><span>⌖</span>本地决策</button>
+        <button class="nav-item" data-view="safe"><span>◉</span>安全与长辈</button>
+        <button class="nav-item" data-view="market"><span>↗</span>竞品版图</button>
+      </nav>
+      <div class="privacy-card"><strong>本地优先</strong><p>数据默认只保存在你的浏览器，可随时导出或清空。</p></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow" id="sectionEyebrow">控制台</p><h1 id="sectionTitle">早上好，今天想解决什么？</h1></div>
+        <div class="top-actions">
+          <button class="ghost" id="exportBtn">导出数据</button>
+          <button class="avatar" aria-label="个人数据">我</button>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboard">
+        <div class="command-card">
+          <div><span class="live-dot"></span>统一入口</div>
+          <h2>粘贴一条短视频信息，先判断，再行动。</h2>
+          <form id="quickForm" class="command-row">
+            <input id="quickInput" placeholder="输入视频标题、口播文案或链接…" autocomplete="off" />
+            <select id="quickIntent" aria-label="处理方式"><option value="verify">核验可信度</option><option value="save">整理成行动</option><option value="buy">辅助购买决策</option></select>
+            <button class="primary" type="submit">开始处理</button>
+          </form>
+          <p class="hint">演示版不会抓取平台私有数据；粘贴文本即可体验完整流程。</p>
+        </div>
+        <div class="stat-grid">
+          <article><span>待核验</span><strong id="statVerify">3</strong><small>其中 1 条缺少来源</small></article>
+          <article><span>已省下</span><strong>¥ 428</strong><small>来自冷静期与价格比较</small></article>
+          <article><span>待执行</span><strong id="statTasks">4</strong><small>从收藏自动生成</small></article>
+          <article><span>信息饮食</span><strong id="feedScore">82</strong><small>健康 · 比上周 +6</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel span-2"><div class="panel-head"><div><p class="eyebrow">今日简报</p><h3>值得你花时间的 3 条内容</h3></div><button class="text-btn" data-go="feed">调整偏好 →</button></div><div id="briefList" class="brief-list"></div></article>
+          <article class="panel"><div class="panel-head"><div><p class="eyebrow">消费刹车</p><h3>冲动购买观察</h3></div></div><div class="ring"><span>2</span><small>件商品冷静中</small></div><p class="muted center">预计避免 ¥328 非计划支出</p><button class="wide secondary" data-go="decide">查看比较单</button></article>
+          <article class="panel"><div class="panel-head"><div><p class="eyebrow">收藏重生</p><h3>把收藏变成计划</h3></div></div><div class="task-preview"><b>周末亲子徒步</b><span>3 个视频 · 已合并路线</span><progress value="2" max="5"></progress><small>2 / 5 项已完成</small></div><button class="wide secondary" data-go="library">继续执行</button></article>
+          <article class="panel span-2"><div class="panel-head"><div><p class="eyebrow">风险雷达</p><h3>最近内容风险分布</h3></div></div><div class="risk-bars"><div><span>无来源断言</span><i style="--w:72%"></i><b>12</b></div><div><span>商业利益未披露</span><i style="--w:48%"></i><b>8</b></div><div><span>过时信息</span><i style="--w:30%"></i><b>5</b></div><div><span>情绪化表达</span><i style="--w:18%"></i><b>3</b></div></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="verify">
+        <div class="split">
+          <article class="panel input-panel"><p class="eyebrow">内容核验</p><h2>把“说得像真的”拆成可检查的事实</h2><textarea id="verifyText" rows="9" placeholder="粘贴视频标题、口播或评论。例如：专家说这款产品三天就能……"></textarea><div class="field-row"><select id="verifyType"><option>健康医疗</option><option>消费购物</option><option>新闻热点</option><option>教育知识</option><option>本地生活</option></select><button id="verifyBtn" class="primary">生成核验卡</button></div><p class="hint">不替代专业诊断或事实核查；它帮助你识别需要进一步验证的主张。</p></article>
+          <article class="panel result-panel" id="verifyResult"><div class="empty-state"><span>◎</span><h3>等待一段内容</h3><p>系统会标出来源、时效、利益关系和夸张表述风险。</p></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="decide">
+        <div class="section-intro"><div><p class="eyebrow">消费决策</p><h2>比较真实代价，不比较主播情绪</h2></div><button class="primary" id="addProduct">＋ 添加候选</button></div>
+        <div class="cooldown"><span>冷静期进行中</span><b>筋膜枪 · 还剩 18:42:16</b><p>你标记的主要理由是“限时最低价”。历史信息不足，建议等到明天。</p><button id="cancelImpulse" class="secondary">决定不买，记录省下 ¥299</button></div>
+        <div class="compare-table" id="productTable"></div>
+      </section>
+
+      <section class="view" id="library">
+        <div class="section-intro"><div><p class="eyebrow">收藏行动化</p><h2>收藏不是终点，完成才是</h2></div><button class="primary" id="addCollection">＋ 新建行动</button></div>
+        <div class="library-layout"><div class="collection-list" id="collectionList"></div><article class="panel action-detail" id="actionDetail"></article></div>
+      </section>
+
+      <section class="view" id="feed">
+        <div class="section-intro"><div><p class="eyebrow">推荐控制</p><h2>你来定义今天的信息饮食</h2></div><button class="primary" id="saveFeed">保存偏好</button></div>
+        <div class="feed-layout"><article class="panel"><h3>主题配额</h3><p class="muted">总计不必等于 100%，它代表相对权重。</p><div id="topicSliders"></div></article><article class="panel"><h3>内容边界</h3><div class="toggle-list" id="boundaryList"></div></article><article class="panel span-2"><h3>临时模式</h3><div class="mode-grid"><button data-mode="专注学习"><b>专注学习</b><span>减少娱乐和购物，持续 2 小时</span></button><button data-mode="情绪休息"><b>情绪休息</b><span>隐藏冲突、疾病和焦虑内容</span></button><button data-mode="纯净购物"><b>纯净购物</b><span>只看主动搜索，不接受带货推荐</span></button><button data-mode="恢复默认"><b>恢复默认</b><span>回到你的长期偏好</span></button></div><p id="modeStatus" class="status-line">当前：长期偏好</p></article></div>
+      </section>
+
+      <section class="view" id="local">
+        <div class="section-intro"><div><p class="eyebrow">本地决策</p><h2>看清去之前真正影响体验的事</h2></div></div>
+        <div class="local-search"><input id="placeSearch" placeholder="搜索地点或需求，例如：适合带娃、有停车位的餐厅"/><button id="placeBtn" class="primary">筛选</button></div>
+        <div class="place-grid" id="placeGrid"></div>
+      </section>
+
+      <section class="view" id="safe">
+        <div class="section-intro"><div><p class="eyebrow">安全与长辈</p><h2>让复杂规则变得看得懂、找得到人</h2></div><label class="big-switch"><input id="seniorMode" type="checkbox"/>长辈易读模式</label></div>
+        <div class="safety-grid"><article class="panel"><h3>评论区净化</h3><textarea id="commentText" rows="6">你是不是傻？这都信。\n我买过同款，三个月后电池衰减明显。\n女生就是容易被营销骗。\n这个价格不含安装费，大家注意。</textarea><button id="filterComments" class="primary wide">过滤攻击，保留信息</button><div id="commentResult"></div></article><article class="panel"><h3>给家人的安全卡</h3><div class="safety-card"><b>直播购物前，先看三件事</b><ol><li>是不是平台内付款</li><li>有没有清楚的退货规则</li><li>“专家”和“最低价”能否验证</li></ol></div><button id="copySafety" class="secondary wide">复制给家人</button><p id="copyStatus" class="status-line"></p></article><article class="panel span-2"><h3>一键求助路径</h3><div class="help-path"><div><span>1</span><b>保存证据</b><small>订单、承诺、聊天、物流</small></div><i>→</i><div><span>2</span><b>平台申诉</b><small>说明诉求并留存编号</small></div><i>→</i><div><span>3</span><b>外部维权</b><small>12315 或相关主管部门</small></div></div></article></div>
+      </section>
+
+      <section class="view" id="market">
+        <div class="section-intro"><div><p class="eyebrow">竞品版图</p><h2>有人解决局部，还没人打通全链路</h2></div></div>
+        <div class="market-table"><div class="market-row head"><span>产品</span><span>擅长</span><span>仍然缺失</span><span>与清流关系</span></div><div class="market-row"><b>抖音</b><span>内容供给、搜索、辟谣卡、电商治理</span><span>用户不可细粒度控制推荐，收藏难行动化</span><em>平台能力底座</em></div><div class="market-row"><b>小红书</b><span>生活经验搜索、消费与本地决策</span><span>商业内容识别、证据链与跨内容整理</span><em>生活决策竞品</em></div><div class="market-row"><b>Readwise Reader</b><span>保存、转录、摘要、标注与知识回顾</span><span>不面向中国短视频消费和本地生活</span><em>收藏模块标杆</em></div><div class="market-row"><b>Inoreader</b><span>订阅、规则过滤、去重和摘要</span><span>不处理短视频交易、安全与评论环境</span><em>推荐控制标杆</em></div><div class="market-row highlight"><b>清流</b><span>核验 → 决策 → 行动 → 偏好 → 安全</span><span>需要平台接口与真实用户共同完善</span><em>统一控制层</em></div></div>
+      </section>
+    </main>
+  </div>
+  <dialog id="productDialog"><form method="dialog" id="productForm"><h3>添加购买候选</h3><label>商品名<input name="name" required placeholder="例如：便携榨汁杯" /></label><label>到手价<input name="price" required type="number" min="0" placeholder="199" /></label><label>退货成本<input name="returnCost" type="number" min="0" value="0" /></label><label>证据完整度<select name="evidence"><option value="高">高</option><option value="中" selected>中</option><option value="低">低</option></select></label><div class="dialog-actions"><button value="cancel" class="ghost">取消</button><button value="default" class="primary">加入比较</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
